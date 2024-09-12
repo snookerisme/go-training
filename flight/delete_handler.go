@@ -8,15 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type deleteHandler struct {
-	db *sql.DB
+func NewDeleteHandler(db *sql.DB) handler {
+	return handler{db: db}
 }
 
-func NewDeleteHandler(db *sql.DB) deleteHandler {
-	return deleteHandler{db: db}
-}
-
-func (h deleteHandler) Delete(c *gin.Context) {
+func (h handler) Delete(c *gin.Context) {
 	idS, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

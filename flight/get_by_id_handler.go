@@ -9,15 +9,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type getByIDHandler struct {
-	db *sql.DB
+func NewGetByIDHandler(db *sql.DB) handler {
+	return handler{db: db}
 }
 
-func NewGetByIDHandler(db *sql.DB) getByIDHandler {
-	return getByIDHandler{db: db}
-}
-
-func (h getByIDHandler) GetByID(c *gin.Context) {
+func (h handler) GetByID(c *gin.Context) {
 	idS, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{

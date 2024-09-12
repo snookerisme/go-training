@@ -8,15 +8,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type createHandler struct {
-	db *sql.DB
+func NewCreateHandler(db *sql.DB) handler {
+	return handler{db: db}
 }
 
-func NewCreateHandler(db *sql.DB) createHandler {
-	return createHandler{db: db}
-}
-
-func (h createHandler) Create(c *gin.Context) {
+func (h handler) Create(c *gin.Context) {
 	var f Flight
 	err := c.ShouldBindJSON(&f)
 	if err != nil {

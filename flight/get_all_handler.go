@@ -9,15 +9,11 @@ import (
 	_ "github.com/lib/pq"
 )
 
-type getAllHandler struct {
-	db *sql.DB
+func NewGetAllHandler(db *sql.DB) handler {
+	return handler{db: db}
 }
 
-func NewGetAllHandler(db *sql.DB) getAllHandler {
-	return getAllHandler{db: db}
-}
-
-func (h getAllHandler) GetAll(c *gin.Context) {
+func (h handler) GetAll(c *gin.Context) {
 
 	stmt, err := h.db.Prepare("SELECT id, number, airlineCode, destination, arrival FROM flight") // HL
 	if err != nil {

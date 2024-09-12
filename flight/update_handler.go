@@ -8,15 +8,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type updateHandler struct {
-	db *sql.DB
+func NewUpdateHandler(db *sql.DB) handler {
+	return handler{db: db}
 }
 
-func NewUpdateHandler(db *sql.DB) updateHandler {
-	return updateHandler{db: db}
-}
-
-func (h updateHandler) Update(c *gin.Context) {
+func (h handler) Update(c *gin.Context) {
 	idS, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
